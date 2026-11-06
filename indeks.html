@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Naruto Ultimate Calculator</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Poppins:wght@400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-family: 'Poppins', sans-serif;
+            background:
+                radial-gradient(circle at 15% 20%, #6b1010, transparent 35%),
+                radial-gradient(circle at 85% 80%, #a34b0a, transparent 35%),
+                #090909;
+        }
+
+        .calculator {
+            width: 100%;
+            max-width: 380px;
+            padding: 23px;
+            border-radius: 25px;
+            background: linear-gradient(145deg, #242020, #0d0c0c);
+            border: 2px solid #9e2525;
+            box-shadow: 0 0 25px rgba(255,40,20,0.25);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 23px;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: #ff6a00;
+            text-shadow: 0 0 15px #ff3c00;
+        }
+
+        .subtitle {
+            margin-top: 7px;
+            color: #bdb0a5;
+            font-size: 10px;
+            letter-spacing: 3px;
+        }
+
+        .cloud {
+            color: #e83232;
+            font-size: 25px;
+            margin-top: 8px;
+        }
+
+        .display {
+            background: #090909;
+            border: 1px solid #a52b2b;
+            border-radius: 15px;
+            padding: 18px;
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        #history {
+            min-height: 20px;
+            color: #a69b91;
+            font-size: 12px;
+            margin-bottom: 10px;
+            overflow-wrap: anywhere;
+        }
+
+        #screen {
+            width: 100%;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            text-align: right;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 11px;
+        }
+
+        button {
+            height: 65px;
+            border: 1px solid #514040;
+            border-radius: 13px;
+            background: linear-gradient(145deg, #302b2b, #171515);
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 19px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        button:hover {
+            transform: translateY(-4px);
+            border-color: #ff5b24;
+            box-shadow: 0 0 15px rgba(255,70,20,0.4);
+        }
+
+        button:active {
+            transform: scale(0.92);
+        }
+
+        .clear {
+            background: linear-gradient(135deg, #c51f25, #751014);
+            border-color: #f34c42;
+        }
+
+        .operator {
+            background: linear-gradient(135deg, #a94b0b, #662606);
+            border-color: #d87922;
+        }
+
+        .equal {
+            background: linear-gradient(135deg, #ff681d, #bd151b);
+            border-color: #ff8a35;
+            grid-column: span 2;
+        }
+
+        .zero {
+            grid-column: span 2;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 22px;
+            color: #a99a91;
+            font-size: 11px;
+            letter-spacing: 2px;
+        }
+
+        .footer span {
+            color: #ff6424;
+            font-weight: bold;
+        }
+
+        @media(max-width: 400px) {
+            .calculator {
+                padding: 17px;
+            }
+
+            button {
+                height: 58px;
+            }
+
+            #screen {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="calculator">
+
+        <div class="header">
+            <div class="logo">NARUTO 忍</div>
+            <div class="subtitle">
+                ULTIMATE SHINOBI CALCULATOR
+            </div>
+            <div class="cloud">☁ 🔥 ☁</div>
+        </div>
+
+        <div class="display">
+            <div id="history">
+                Believe It! Dattebayo!
+            </div>
+
+            <input type="text" id="screen" value="0" readonly>
+        </div>
+
+        <div class="buttons">
+
+            <button class="clear" onclick="clearScreen()">AC</button>
+            <button class="operator" onclick="deleteOne()">⌫</button>
+            <button class="operator" onclick="percent()">%</button>
+            <button class="operator" onclick="add('/')">÷</button>
+
+            <button onclick="add('7')">7</button>
+            <button onclick="add('8')">8</button>
+            <button onclick="add('9')">9</button>
+            <button class="operator" onclick="add('*')">×</button>
+
+            <button onclick="add('4')">4</button>
+            <button onclick="add('5')">5</button>
+            <button onclick="add('6')">6</button>
+            <button class="operator" onclick="add('-')">−</button>
+
+            <button onclick="add('1')">1</button>
+            <button onclick="add('2')">2</button>
+            <button onclick="add('3')">3</button>
+            <button class="operator" onclick="add('+')">+</button>
+
+            <button class="zero" onclick="add('0')">0</button>
+            <button onclick="add('.')">.</button>
+            <button class="equal" onclick="calculate()">=</button>
+
+        </div>
+
+        <div class="footer">
+            <span>🔥</span> BELIEVE IT! <span>🔥</span>
+        </div>
+
+    </div>
+
+    <!-- Menghubungkan JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+</html>
